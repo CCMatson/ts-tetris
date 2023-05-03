@@ -1,6 +1,7 @@
 // board.tsx
 
-import { Block, EmptyCell, CellOptions, BoardShape } from '../types/types'
+import { BoardShape } from '../types/types'
+import Cell from './cell';
 
 //board 
 interface Props {

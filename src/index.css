@@ -1,0 +1,50 @@
+h1{
+text-align: center;
+}
+.board{
+border: 2px black solid;
+user-select: none;
+margin: auto;
+width: fit-content;
+}
+.row {
+  display: flex;
+
+}
+.cell {
+  width: 30px;
+  aspect-ratio: 1;
+  border: .05px black solid;
+}
+
+.cell.Empty{
+  background-color: #eef3ff;
+}
+
+.cell.I {
+  background-color: #cde5f9;
+}
+
+.cell.J {
+  background-color: #85b6ce;
+}
+
+.cell.L {
+  background-color: #64a8a8;
+}
+
+.cell.O {
+  background-color: #4a9152;
+}
+
+.cell.S {
+  background-color: #45681e;
+}
+
+.cell.T {
+  background-color: #54450f;
+}
+
+.cell.Z {
+  background-color: #362904;
+}

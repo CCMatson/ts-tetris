@@ -1,11 +1,8 @@
 import Board from './components/board'
-import { EmptyCell } from './types/types'
 
-const board = Array(20)
-.fill(null)
-.map(()=> Array(12).fill(EmptyCell.Empty))
 
 function App() {
+  // const {board, startGame, isPlaying, score, upcomingBlocks} = useTetris()
 
 
   return (

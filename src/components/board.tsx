@@ -1,5 +1,3 @@
-// board.tsx
-
 import { BoardShape } from '../types/types'
 import Cell from './cell';
 

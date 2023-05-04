@@ -18,6 +18,8 @@ export type CellOptions = Block | EmptyCell;
 
 export type BoardShape = CellOptions[][];
 
+export type BlockShape = boolean[][];
+
 //add type ShapeObject?
 
 //shapes starting positions as boolean arrays

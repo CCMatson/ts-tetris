@@ -1,8 +1,10 @@
 import Board from './components/board'
+import { useTetris } from './hooks/useTetris'
 
 
 function App() {
-  // const {board, startGame, isPlaying, score, upcomingBlocks} = useTetris()
+
+  const {board, startGame, isPlaying} = useTetris();
 
 
   return (
@@ -10,7 +12,12 @@ function App() {
     <div className='App'>
       <h1>Tetris</h1>
       <Board currentBoard={board}/>
-
+      <div className="controls">
+        {isPlaying ? null : (
+          <button onClick={startGame}>New Game</button>
+        )
+        }
+      </div>
     </div>
     </>
   )

@@ -1,16 +1,31 @@
+.App {
+  display: grid;
+  grid-template-areas: 
+  ". title ."
+  ". game controllers ";
+  grid-template-columns: repeat(3, 1fr);
+}
+
 h1{
 text-align: center;
+grid-area: title;
 }
+
+.controls {
+  grid-area: controls;
+}
+
 .board{
 border: 2px black solid;
 user-select: none;
 margin: auto;
-width: fit-content;
+grid-area: game;
 }
+
 .row {
   display: flex;
-
 }
+
 .cell {
   width: 30px;
   aspect-ratio: 1;

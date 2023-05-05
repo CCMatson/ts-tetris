@@ -42,6 +42,7 @@ export function getEmptyBoard(height = BOARD_HEIGHT): BoardShape {
 
 type Action = {
   type: 'start' | 'drop' | 'commit' | 'move',
+  newBoard: BoardShape
 };
 
 function boardReducer(state: BoardState, action: Action): BoardState {

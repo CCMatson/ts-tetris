@@ -48,7 +48,10 @@ export function useTetris() {
       droppingColumn
     )
     setTickSpeed(TickSpeed.Normal)
-    dispatchBoardState({type: 'commit'})
+    dispatchBoardState({
+      type: 'commit',
+      newBoard
+    })
     setIsCommiting(false)
   }, [board, dispatchBoardState, droppingBlock, droppingColumn, droppingRow, droppingShape])
 

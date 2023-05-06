@@ -27,19 +27,26 @@ export function useTetris() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [isCommiting, setIsCommiting] = useState(false);
+  const [upcomingBlocks, setUpcomingBlocks] = useState<Block[]>([])
 
-  //useTetrisBoard hook is used to define vables,an object that respresents the current state of the game play and a function to update the state of the game board
+  //useTetrisBoard hook is used to define variables,an object that respresents the current state of the game play and a function to update the state of the game board
   const [
     { board, droppingRow, droppingColumn, droppingBlock, droppingShape },
     dispatchBoardState,
   ] = useTetrisBoard();
 
-  //start the game with a callback function
+  //start the game with a callback function, setIsPlaying to true
   const startGame = useCallback(() => {
+    const startBlocks = [
+      getRandomBlock(),
+      getRandomBlock(),
+      getRandomBlock(),
+    ];
+    setUpcomingBlocks(startBlocks);
     setIsCommiting(false);
     setIsPlaying(true);
     setTickSpeed(TickSpeed.Normal);
-    dispatchBoardState({ type: "start", newBoard });
+    dispatchBoardState({ type: "start" });
   }, [dispatchBoardState]);
 
   //check to see if the shape had a collision with the board or another shape, if no collision then the shape keeps dropping at normal speed
@@ -59,6 +66,12 @@ export function useTetris() {
       droppingRow,
       droppingColumn
     );
+
+    //initializes variable with deep copy of the upcomingBlocks array
+    const newUpcomingBlocks = structuredClone(upcomingBlocks) as Block[]
+    const newBlock = newUpcomingBlocks.pop() as Block
+    newUpcomingBlocks.unshift(getRandomBlock())
+
     setTickSpeed(TickSpeed.Normal);
     dispatchBoardState({
       type: "commit",
@@ -72,6 +85,7 @@ export function useTetris() {
     droppingColumn,
     droppingRow,
     droppingShape,
+    upcomingBlocks
   ]);
 
   //commits shape conditionally and allows user to slide the block once it has collided with the bottom or another shape

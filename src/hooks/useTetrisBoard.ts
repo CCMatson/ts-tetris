@@ -52,7 +52,7 @@ export function getEmptyBoard(height = BOARD_HEIGHT): BoardShape {
 //this is a type for the actions that can be dispatched to update the board
 type Action = {
   type: "start" | "drop" | "commit" | "move";
-  newBoard: BoardShape;
+  newBoard?: BoardShape;
 };
 
 //reducer function updates the state of the board based on the action that is dispatched, returns a new state object

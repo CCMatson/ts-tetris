@@ -1,26 +1,20 @@
-import Board from './components/board'
-import { useTetris } from './hooks/useTetris'
-
+import Board from "./components/board";
+import { useTetris } from "./hooks/useTetris";
 
 function App() {
-
-  const {board, startGame, isPlaying} = useTetris();
-
+  const { board, startGame, isPlaying } = useTetris();
 
   return (
     <>
-    <div className='App'>
-      <h1>Tetris</h1>
-      <Board currentBoard={board}/>
-      <div className="controls">
-        {isPlaying ? null : (
-          <button onClick={startGame}>New Game</button>
-        )
-        }
+      <div className="App">
+        <h1>Tetris</h1>
+        <Board currentBoard={board} />
+        <div className="controls">
+          {isPlaying ? null : <button onClick={startGame}>New Game</button>}
+        </div>
       </div>
-    </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

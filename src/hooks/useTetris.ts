@@ -27,7 +27,7 @@ export function useTetris() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [isCommiting, setIsCommiting] = useState(false);
-  const [upcomingBlocks, setUpcomingBlocks] = useState<Block[]>([])
+  const [upcomingBlocks, setUpcomingBlocks] = useState<Block[]>([]);
 
   //useTetrisBoard hook is used to define variables,an object that respresents the current state of the game play and a function to update the state of the game board
   const [
@@ -37,11 +37,7 @@ export function useTetris() {
 
   //start the game with a callback function, setIsPlaying to true
   const startGame = useCallback(() => {
-    const startBlocks = [
-      getRandomBlock(),
-      getRandomBlock(),
-      getRandomBlock(),
-    ];
+    const startBlocks = [getRandomBlock(), getRandomBlock(), getRandomBlock()];
     setUpcomingBlocks(startBlocks);
     setIsCommiting(false);
     setIsPlaying(true);
@@ -68,9 +64,9 @@ export function useTetris() {
     );
 
     //initializes variable with deep copy of the upcomingBlocks array
-    const newUpcomingBlocks = structuredClone(upcomingBlocks) as Block[]
-    const newBlock = newUpcomingBlocks.pop() as Block
-    newUpcomingBlocks.unshift(getRandomBlock())
+    const newUpcomingBlocks = structuredClone(upcomingBlocks) as Block[];
+    const newBlock = newUpcomingBlocks.pop() as Block;
+    newUpcomingBlocks.unshift(getRandomBlock());
 
     setTickSpeed(TickSpeed.Normal);
     dispatchBoardState({
@@ -85,7 +81,7 @@ export function useTetris() {
     droppingColumn,
     droppingRow,
     droppingShape,
-    upcomingBlocks
+    upcomingBlocks,
   ]);
 
   //commits shape conditionally and allows user to slide the block once it has collided with the bottom or another shape
@@ -117,6 +113,23 @@ export function useTetris() {
     }
     gameTick();
   }, tickSpeed);
+
+  //useEffect to manage event listeners
+  useEffect(() => {
+    if (!isPlaying) {
+      return;
+    }
+    //add keybord event listeners here
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowDown") {
+        setTickSpeed(TickSpeed.Fast);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isPlaying]);
 
   //render the game board
   const renderedBoard = structuredClone(board) as BoardShape;

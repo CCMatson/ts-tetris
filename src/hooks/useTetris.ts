@@ -167,7 +167,7 @@ export function useTetris() {
         (isPressingRight = true), updateMovementInterval();
       }
     };
-
+    //when user lifts up the the keys, the booleans that stand for "left" and "right" keys are turned to false
     const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === "ArrowDown") {
         setTickSpeed(TickSpeed.Normal);

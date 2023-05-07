@@ -124,10 +124,41 @@ export function useTetris() {
       if (event.key === "ArrowDown") {
         setTickSpeed(TickSpeed.Fast);
       }
+      if (event.key === "ArrowUp") {
+        dispatchBoardState({
+          type: 'move',
+          isRotating: true,
+        })
+      }
+
+      if (event.key === "ArrowLeft") {
+        dispatchBoardState({
+          type: 'move',
+          isPressingLeft: true
+        })
+      }
+
+      if (event.key === "ArrowRight") {
+        dispatchBoardState({
+          type: 'move',
+          isPressingRight: true,
+        })
+      }
     };
+
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === "ArrowDown") {
+        setTickSpeed(TickSpeed.Normal)
+      }
+    }
+
     document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp)
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp)
+      setTickSpeed(TickSpeed.Normal)
     };
   }, [isPlaying]);
 

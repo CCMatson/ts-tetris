@@ -53,6 +53,9 @@ export function getEmptyBoard(height = BOARD_HEIGHT): BoardShape {
 type Action = {
   type: "start" | "drop" | "commit" | "move";
   newBoard?: BoardShape;
+  isPressingLeft?: boolean;
+  isPressingRight?: boolean;
+  isRotating?: boolean;
 };
 
 //reducer function updates the state of the board based on the action that is dispatched, returns a new state object
@@ -60,6 +63,8 @@ function boardReducer(state: BoardState, action: Action): BoardState {
   let firstBlock;
   let unhandledType: never;
   const newState = { ...state };
+  // let rotatedShape = null;
+
   switch (action.type) {
     case "start":
       firstBlock = getRandomBlock();
@@ -75,12 +80,45 @@ function boardReducer(state: BoardState, action: Action): BoardState {
       break;
     case "commit":
     case "move":
-      return state;
+      const rotatedShape = action.isRotating
+        ? rotateBlock(newState.droppingShape)
+        : newState.droppingShape;
+      let columnOffset = action.isPressingLeft ? -1 : 0;
+      columnOffset = action.isPressingRight ? 1 : columnOffset;
+      if (
+        !hasCollision(
+          newState.board,
+          rotatedShape,
+          newState.droppingRow,
+          newState.droppingColumn + columnOffset
+        )
+      ) {
+        newState.droppingColumn += columnOffset;
+        newState.droppingShape = rotatedShape;
+      }
+        break;
     default:
       unhandledType = action.type;
       throw new Error(`Unhandled action type: ${unhandledType}`);
   }
   return newState;
+}
+
+//when the action is 'move' the player can rotate the block, the 2D boolean arrays
+function rotateBlock(shape: BlockShape): BlockShape {
+  const rows = shape.length;
+  const columns = shape[0].length;
+
+  const rotated = Array(rows)
+    .fill(null)
+    .map(() => Array(columns).fill(false));
+
+  for (let row = 0; row < rows; row++) {
+    for (let column = 0; column < columns; column++) {
+      rotated[column][rows - 1 - row] = shape[row][column];
+    }
+  }
+  return rotated;
 }
 
 //get a random block

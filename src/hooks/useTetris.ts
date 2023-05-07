@@ -15,7 +15,7 @@ import {
   hasCollision,
 } from "./useTetrisBoard";
 
-//speed of dropping shapes
+//speed options for dropping shapes
 enum TickSpeed {
   Normal = 800,
   Sliding = 100,
@@ -29,7 +29,7 @@ export function useTetris() {
   const [isCommiting, setIsCommiting] = useState(false);
   const [upcomingBlocks, setUpcomingBlocks] = useState<Block[]>([]);
 
-  //useTetrisBoard hook is used to define variables,an object that respresents the current state of the game play and a function to update the state of the game board
+  //here the useTetrisBoard hook is used to define variables, an object that respresents the current state of the game play and a function to update the state of the game board
   const [
     { board, droppingRow, droppingColumn, droppingBlock, droppingShape },
     dispatchBoardState,
@@ -119,48 +119,79 @@ export function useTetris() {
     if (!isPlaying) {
       return;
     }
+    //set left and right to boolean values for better control
+    let isPressingLeft = false;
+    let isPressingRight = false;
+    let moveIntervalID: number | undefined;
+
+    //sets up an interval that repeatedly dispatches a 'move' action to the boardReducer to indicate if the user is pressing left or right keys
+    const updateMovementInterval = () => {
+      //clear interval
+      clearInterval(moveIntervalID);
+      //dispatches action
+      dispatchBoardState({
+        type: "move",
+        isPressingLeft,
+        isPressingRight,
+      });
+      //creates a new interval
+      moveIntervalID = setInterval(() => {
+        dispatchBoardState({
+          type: "move",
+          isPressingLeft,
+          isPressingRight,
+        });
+      }, 300);
+    };
+
     //add keybord event listeners here
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.repeat) {
+        return;
+      }
       if (event.key === "ArrowDown") {
         setTickSpeed(TickSpeed.Fast);
       }
       if (event.key === "ArrowUp") {
         dispatchBoardState({
-          type: 'move',
+          type: "move",
           isRotating: true,
-        })
+        });
       }
 
       if (event.key === "ArrowLeft") {
-        dispatchBoardState({
-          type: 'move',
-          isPressingLeft: true
-        })
+        (isPressingLeft = true), updateMovementInterval();
       }
 
       if (event.key === "ArrowRight") {
-        dispatchBoardState({
-          type: 'move',
-          isPressingRight: true,
-        })
+        (isPressingRight = true), updateMovementInterval();
       }
     };
-
 
     const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === "ArrowDown") {
-        setTickSpeed(TickSpeed.Normal)
+        setTickSpeed(TickSpeed.Normal);
       }
-    }
+
+      if (event.key === "ArrowLeft") {
+        (isPressingLeft = false), updateMovementInterval();
+      }
+
+      if (event.key === "ArrowRight") {
+        (isPressingRight = false), updateMovementInterval();
+      }
+    };
 
     document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp)
+    document.addEventListener("keyup", handleKeyUp);
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp)
-      setTickSpeed(TickSpeed.Normal)
+      document.removeEventListener("keyup", handleKeyUp);
+      clearInterval(moveIntervalID);
+      setTickSpeed(TickSpeed.Normal);
     };
-  }, [isPlaying]);
+  }, [dispatchBoardState, isPlaying]);
 
   //render the game board
   const renderedBoard = structuredClone(board) as BoardShape;

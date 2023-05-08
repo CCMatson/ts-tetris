@@ -1,13 +1,11 @@
-// in review
+  import { CellOptions } from "../types/types";
 
-import { CellOptions } from "../types/types";
+  interface Props {
+    type: CellOptions;
+  }
 
-interface Props {
-  type: CellOptions;
-}
+  function Cell({ type }: Props) {
+    return <div className={`cell ${type}`} />;
+  }
 
-function Cell({ type }: Props) {
-  return <div className={`cell ${type}`} />;
-}
-
-export default Cell;
+  export default Cell;

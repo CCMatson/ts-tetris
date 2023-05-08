@@ -16,7 +16,6 @@ export type BoardState = {
   droppingRow: number;
   droppingColumn: number;
   droppingBlock: Block;
-  // hard code rotating each shape here?
   droppingShape: BlockShape;
 };
 
@@ -49,10 +48,38 @@ export function getEmptyBoard(height = BOARD_HEIGHT): BoardShape {
     .map(() => Array(BOARD_WIDTH).fill(EmptyCell.Empty));
 }
 
+//check to see if the current block has collided with the board or another block, returns a boolean if there is a collision
+export function hasCollision(
+  board: BoardShape,
+  currentShape: BlockShape,
+  row: number,
+  column: number
+): boolean {
+  let hasCollision = false;
+  currentShape
+    .filter((shapeRow) => shapeRow.some((isSet) => isSet))
+    .forEach((shapeRow: boolean[], rowIndex: number) => {
+      shapeRow.forEach((isSet: boolean, colIndex: number) => {
+        if (
+          isSet &&
+          (row + rowIndex >= board.length ||
+            column + colIndex >= board[0].length ||
+            column + colIndex < 0 ||
+            board[row + rowIndex][column + colIndex] !== EmptyCell.Empty)
+        ) {
+          hasCollision = true;
+        }
+      });
+    });
+
+  return hasCollision;
+}
+
 //this is a type for the actions that can be dispatched to update the board
 type Action = {
   type: "start" | "drop" | "commit" | "move";
   newBoard?: BoardShape;
+  newBlock?: Block;
   isPressingLeft?: boolean;
   isPressingRight?: boolean;
   isRotating?: boolean;
@@ -63,7 +90,8 @@ function boardReducer(state: BoardState, action: Action): BoardState {
   let firstBlock;
   let unhandledType: never;
   const newState = { ...state };
-  // let rotatedShape = null;
+  let rotatedShape = newState.droppingShape;
+  let columnOffset;
 
   switch (action.type) {
     case "start":
@@ -79,11 +107,20 @@ function boardReducer(state: BoardState, action: Action): BoardState {
       newState.droppingRow++;
       break;
     case "commit":
+      return {
+        board: [
+          ...getEmptyBoard(BOARD_HEIGHT - action.newBoard!.length),
+          ... action.newBoard!],
+        droppingRow: 0,
+        droppingColumn: 3,
+        droppingBlock: action.newBlock!,
+        droppingShape: Shapes[action.newBlock!].shapes,
+      };
     case "move":
-      const rotatedShape = action.isRotating
+      rotatedShape = action.isRotating
         ? rotateBlock(newState.droppingShape)
         : newState.droppingShape;
-      let columnOffset = action.isPressingLeft ? -1 : 0;
+      columnOffset = action.isPressingLeft ? -1 : 0;
       columnOffset = action.isPressingRight ? 1 : columnOffset;
       if (
         !hasCollision(
@@ -127,29 +164,3 @@ export function getRandomBlock(): Block {
   return blockValues[Math.floor(Math.random() * blockValues.length)] as Block;
 }
 
-//check to see if the current block has collided with the board or another block, returns a boolean if there is a collision
-export function hasCollision(
-  board: BoardShape,
-  currentShape: BlockShape,
-  row: number,
-  column: number
-): boolean {
-  let hasCollision = false;
-  currentShape
-    .filter((shapeRow) => shapeRow.some((isSet) => isSet))
-    .forEach((shapeRow: boolean[], rowIndex: number) => {
-      shapeRow.forEach((isSet: boolean, colIndex: number) => {
-        if (
-          isSet &&
-          (row + rowIndex >= board.length ||
-            column + colIndex >= board[0].length ||
-            column + colIndex < 0 ||
-            board[row + rowIndex][column + colIndex] !== EmptyCell.Empty)
-        ) {
-          hasCollision = true;
-        }
-      });
-    });
-
-  return hasCollision;
-}

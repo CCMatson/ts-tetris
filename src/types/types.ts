@@ -1,4 +1,4 @@
-//block types
+//block types are strings
 export enum Block {
   I = "I",
   J = "J",
@@ -23,8 +23,14 @@ export type BoardShape = CellOptions[][];
 //2D array of boolean values, representing shape of a block that can be placed on the game board
 export type BlockShape = boolean[][];
 
+type ShapesObj = {
+  [key in Block]: {
+    shapes: BlockShape;
+  }
+}
+
 //shapes starting positions as boolean arrays, rotate these arrays to rotate blocks
-export const Shapes = {
+export const Shapes: ShapesObj = {
   I: {
     shapes: [
       [false, false, false, false],

@@ -1,3 +1,13 @@
+body {
+  --color-background: #FFFFFF;
+}
+
+@media (prefers-colors-scheme: dark) {
+  body {
+    --color-background: #FFFFFF;
+  }
+}
+
 .App {
   display: grid;
   grid-template-areas: 
@@ -9,6 +19,7 @@
 h1{
 text-align: center;
 grid-area: title;
+--color-title: #222222;
 }
 
 .controls {
@@ -34,6 +45,8 @@ grid-area: game;
 
 .cell.Empty{
   background-color: #eef3ff;
+  background-color: #F2F2F2;
+  --color-board: #F2F2F2;;
 }
 
 .cell.I {

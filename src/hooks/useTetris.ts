@@ -24,6 +24,7 @@ enum TickSpeed {
 
 //define state variables
 export function useTetris() {
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [isCommiting, setIsCommiting] = useState(false);
@@ -52,7 +53,8 @@ export function useTetris() {
       setTickSpeed(TickSpeed.Normal);
       return;
     }
-
+  
+    
     //newBoard is a copy of the 'board' with the type BoardShape, call helper function to add shape to the board, updates board state
     const newBoard = structuredClone(board) as BoardShape;
     addShapeToBoard(
@@ -61,17 +63,33 @@ export function useTetris() {
       droppingShape,
       droppingRow,
       droppingColumn
-    );
-
+      );
+      let numCleared = 0;
+      for (let row = BOARD_HEIGHT - 1; row >= 0; row--) {
+        if (newBoard[row].every((entry) => entry !== EmptyCell.Empty)) {
+          numCleared++;
+          newBoard.splice(row, 1);
+        }
+      }
+      
     //initializes variable with deep copy of the upcomingBlocks array
     const newUpcomingBlocks = structuredClone(upcomingBlocks) as Block[];
+
     const newBlock = newUpcomingBlocks.pop() as Block;
     newUpcomingBlocks.unshift(getRandomBlock());
 
-    setTickSpeed(TickSpeed.Normal);
+    if(hasCollision(board, Shapes[newBlock].shapes, 0 , 3)){
+      setIsPlaying(false)
+      setTickSpeed(null)
+    } else {
+      setTickSpeed(TickSpeed.Normal)
+    }
+    setUpcomingBlocks(newUpcomingBlocks)
+
     dispatchBoardState({
+      //there is an error here, after the first block commits the game errors instead of dropping the next block.
       type: "commit",
-      newBoard,
+      // newBoard: [...getEmptyBoard(BOARD_HEIGHT - newBoard.length), ...newBlock], newBlock,
     });
     setIsCommiting(false);
   }, [

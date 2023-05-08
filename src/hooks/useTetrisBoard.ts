@@ -5,7 +5,7 @@ import {
   Shapes,
   EmptyCell,
   Block,
-} from "../types/types";
+} from "../types/Shapes";
 
 export const BOARD_WIDTH = 10;
 export const BOARD_HEIGHT = 20;

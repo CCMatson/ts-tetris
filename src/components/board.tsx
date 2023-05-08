@@ -1,4 +1,4 @@
-import { BoardShape } from "../types/types";
+import { BoardShape } from "../types/Shapes";
 import Cell from "./Cell";
 
 interface Props {

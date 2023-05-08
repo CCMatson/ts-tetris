@@ -5,7 +5,7 @@ import {
   BoardShape,
   Shapes,
   EmptyCell,
-} from "../types/types";
+} from "../types/Shapes";
 import { useInterval } from "./useInterval";
 import {
   useTetrisBoard,

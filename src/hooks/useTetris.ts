@@ -74,7 +74,6 @@ export function useTetris() {
       
     //initializes variable with deep copy of the upcomingBlocks array
     const newUpcomingBlocks = structuredClone(upcomingBlocks) as Block[];
-
     const newBlock = newUpcomingBlocks.pop() as Block;
     newUpcomingBlocks.unshift(getRandomBlock());
 
@@ -85,11 +84,10 @@ export function useTetris() {
       setTickSpeed(TickSpeed.Normal)
     }
     setUpcomingBlocks(newUpcomingBlocks)
-
     dispatchBoardState({
       //there is an error here, after the first block commits the game errors instead of dropping the next block.
       type: "commit",
-      // newBoard: [...getEmptyBoard(BOARD_HEIGHT - newBoard.length), ...newBlock], newBlock,
+      newBoard: [...getEmptyBoard(BOARD_HEIGHT - newBoard.length), ...newBoard], newBlock,
     });
     setIsCommiting(false);
   }, [
@@ -226,6 +224,7 @@ export function useTetris() {
     board: renderedBoard,
     startGame,
     isPlaying,
+    upcomingBlocks
   };
 }
 

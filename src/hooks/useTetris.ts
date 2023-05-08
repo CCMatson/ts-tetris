@@ -24,13 +24,13 @@ enum TickSpeed {
 
 //define state variables
 export function useTetris() {
-
+  const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [isCommiting, setIsCommiting] = useState(false);
   const [upcomingBlocks, setUpcomingBlocks] = useState<Block[]>([]);
 
-  //here the useTetrisBoard hook is used to define variables, an object that respresents the current state of the game play and a function to update the state of the game board
+  //here the useTetrisBoard hook is used to define 2 variables, an object that respresents the current state of the game play and a function to dispatch an update of the state of the game board
   const [
     { board, droppingRow, droppingColumn, droppingBlock, droppingShape },
     dispatchBoardState,
@@ -39,6 +39,7 @@ export function useTetris() {
   //start the game with a callback function, setIsPlaying to true
   const startGame = useCallback(() => {
     const startBlocks = [getRandomBlock(), getRandomBlock(), getRandomBlock()];
+    setScore(0);
     setUpcomingBlocks(startBlocks);
     setIsCommiting(false);
     setIsPlaying(true);
@@ -53,8 +54,7 @@ export function useTetris() {
       setTickSpeed(TickSpeed.Normal);
       return;
     }
-  
-    
+
     //newBoard is a copy of the 'board' with the type BoardShape, call helper function to add shape to the board, updates board state
     const newBoard = structuredClone(board) as BoardShape;
     addShapeToBoard(
@@ -63,31 +63,36 @@ export function useTetris() {
       droppingShape,
       droppingRow,
       droppingColumn
-      );
-      let numCleared = 0;
-      for (let row = BOARD_HEIGHT - 1; row >= 0; row--) {
-        if (newBoard[row].every((entry) => entry !== EmptyCell.Empty)) {
-          numCleared++;
-          newBoard.splice(row, 1);
-        }
+    );
+
+    //checking and clearing filled in rows
+    let numCleared = 0;
+    //start at the bottom and check towards the top
+    for (let row = BOARD_HEIGHT - 1; row >= 0; row--) {
+      //every entry in the row is checked to see if it's empty, if the row is not empty (filled) then it is cleared.
+      if (newBoard[row].every((entry) => entry !== EmptyCell.Empty)) {
+        numCleared++;
+        newBoard.splice(row, 1);
       }
-      
-    //initializes variable with deep copy of the upcomingBlocks array
+    }
+
+    //initializes variable with deep copy of the upcomingBlocks array, as each block is commited the new board is set in state so that the new block can drop
     const newUpcomingBlocks = structuredClone(upcomingBlocks) as Block[];
     const newBlock = newUpcomingBlocks.pop() as Block;
     newUpcomingBlocks.unshift(getRandomBlock());
 
-    if(hasCollision(board, Shapes[newBlock].shapes, 0 , 3)){
-      setIsPlaying(false)
-      setTickSpeed(null)
+    if (hasCollision(board, Shapes[newBlock].shapes, 0, 3)) {
+      setIsPlaying(false);
+      setTickSpeed(null);
     } else {
-      setTickSpeed(TickSpeed.Normal)
+      setTickSpeed(TickSpeed.Normal);
     }
-    setUpcomingBlocks(newUpcomingBlocks)
+    setUpcomingBlocks(newUpcomingBlocks);
+    setScore((prevScore) => prevScore + getPoints(numCleared));
     dispatchBoardState({
-      //there is an error here, after the first block commits the game errors instead of dropping the next block.
       type: "commit",
-      newBoard: [...getEmptyBoard(BOARD_HEIGHT - newBoard.length), ...newBoard], newBlock,
+      newBoard: [...getEmptyBoard(BOARD_HEIGHT - newBoard.length), ...newBoard],
+      newBlock,
     });
     setIsCommiting(false);
   }, [
@@ -209,6 +214,43 @@ export function useTetris() {
     };
   }, [dispatchBoardState, isPlaying]);
 
+  //keeps track of the shapes on the board, as a boolean if the shape occupys the row and column
+  function addShapeToBoard(
+    board: BoardShape,
+    droppingBlock: Block,
+    droppingShape: BlockShape,
+    droppingRow: number,
+    droppingColumn: number
+  ) {
+    droppingShape
+      .filter((row) => row.some((isSet) => isSet))
+      .forEach((row: boolean[], rowIndex: number) => {
+        row.forEach((isSet: boolean, colIndex: number) => {
+          if (isSet) {
+            board[droppingRow + rowIndex][droppingColumn + colIndex] =
+              droppingBlock;
+          }
+        });
+      });
+  }
+
+  function getPoints(numCleared: number): number {
+    switch (numCleared) {
+      case 0:
+        return 0;
+      case 1:
+        return 100;
+      case 2:
+        return 300;
+      case 3:
+        return 500;
+      case 4:
+        return 800;
+      default:
+        throw new Error("Unexpected number of rows cleared");
+    }
+  }
+
   //render the game board
   const renderedBoard = structuredClone(board) as BoardShape;
   if (isPlaying) {
@@ -224,26 +266,7 @@ export function useTetris() {
     board: renderedBoard,
     startGame,
     isPlaying,
-    upcomingBlocks
+    score,
+    upcomingBlocks,
   };
-}
-
-//keeps track of the shapes on the board, as a boolean if the shape occupys the row and column
-function addShapeToBoard(
-  board: BoardShape,
-  droppingBlock: Block,
-  droppingShape: BlockShape,
-  droppingRow: number,
-  droppingColumn: number
-) {
-  droppingShape
-    .filter((row) => row.some((isSet) => isSet))
-    .forEach((row: boolean[], rowIndex: number) => {
-      row.forEach((isSet: boolean, colIndex: number) => {
-        if (isSet) {
-          board[droppingRow + rowIndex][droppingColumn + colIndex] =
-            droppingBlock;
-        }
-      });
-    });
 }

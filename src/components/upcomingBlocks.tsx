@@ -4,6 +4,7 @@ interface Props {
   upcomingBlocks: Block[];
 }
 
+//this is code for the 'upcoming blocks' viewer window. The block value is used to get a shape (2D boolean arrays), filter is applied to the shape array to remove empty rows. The boolean 'isSet' checks to see if the current dropping block is commited to a position so that the array can be adjusted. 
 function UpcomingBlocks({ upcomingBlocks }: Props) {
   return (
     <div className="upcoming">

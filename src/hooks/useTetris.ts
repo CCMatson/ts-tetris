@@ -23,7 +23,14 @@ enum TickSpeed {
 }
 
 //define state variables
-export function useTetris() {
+export function useTetris(): {
+  //add type to validate the object in app
+board: BoardShape;
+startGame: () => void;
+isPlaying: boolean;
+score: number;
+upcomingBlocks: Block[];
+} {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);

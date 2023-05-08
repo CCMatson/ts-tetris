@@ -1,5 +1,5 @@
 import { BoardShape } from "../types/types";
-import Cell from "./cell";
+import Cell from "./Cell";
 
 interface Props {
   currentBoard: BoardShape;

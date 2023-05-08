@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Itim&display=swap');
+
 body {
   --color-background: #FFFFFF;
 }
@@ -19,7 +21,15 @@ body {
 h1{
 text-align: center;
 grid-area: title;
+font-size: 48px;
 --color-title: #222222;
+font-family: 'Berkshire Swash', cursive;
+font-family: 'Itim', cursive;;
+}
+
+h2 {
+  font-family: 'Itim', cursive;
+  font-family: 'Berkshire Swash', cursive;
 }
 
 .controls {
@@ -37,10 +47,23 @@ grid-area: game;
   display: flex;
 }
 
+.upcoming {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 10px;
+  border: #222222 solid 2px;
+  padding: 10px;
+}
+
 .cell {
   width: 30px;
   aspect-ratio: 1;
   border: .05px black solid;
+}
+
+.cell.hidden {
+  visibility: hidden;
 }
 
 .cell.Empty{
@@ -50,7 +73,7 @@ grid-area: game;
 }
 
 .cell.I {
-  background-color: #cde5f9;
+  background-color: #0900ff;
 }
 
 .cell.J {
@@ -75,4 +98,84 @@ grid-area: game;
 
 .cell.Z {
   background-color: #362904;
+}
+
+.button {
+  align-self: center;
+  background-color: #fff;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: .75rem;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  font-family: 'Berkshire Swash', cursive;
+  font-family: 'Itim', cursive;;
+  font-size: 18px;
+}
+
+.button:hover {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+  background-color: #eef3ff;
+}
+
+.button:focus {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+@media screen and (max-width: 800px) {
+  /* CSS styles for screens with a width of 800px or less */
+  .App {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upcoming {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  /* CSS styles for screens with a width of 800px or less */
+  .App {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  .cell {
+    width: 20px;
+  }
+
+  .upcoming {
+    display: flex;
+    justify-content: space-around;
+  }
 }

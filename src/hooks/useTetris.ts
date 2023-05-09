@@ -1,11 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import {
-  Block,
-  BlockShape,
-  BoardShape,
-  Shapes,
-  EmptyCell,
-} from "../types/Shapes";
+import { Block } from "../types/Block";
+import { BlockShape } from "../types/BlockShape";
+import { BoardShape } from "../types/BoardShape";
+import { Shapes } from "../types/Shapes";
+import { EmptyCell } from "../types/EmptyCell";
 import { useInterval } from "./useInterval";
 import {
   useTetrisBoard,

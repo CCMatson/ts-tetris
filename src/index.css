@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Itim&display=swap");
 
 body {
-  --color-background: #ffffff;
+  background-color: #edf2fb;
 }
 
 @media (prefers-colors-scheme: dark) {
-  body {
+  /* body {
     --color-background: #ffffff;
-  }
+  } */
 }
 
 #root {
@@ -73,13 +73,11 @@ h2 {
 }
 
 .cell.Empty {
-  background-color: #eef3ff;
   background-color: #f2f2f2;
-  --color-board: #f2f2f2;
 }
 
 .cell.I {
-  background-color: #0900ff;
+  background-color: #0496ff;
 }
 
 .cell.J {
@@ -91,7 +89,7 @@ h2 {
 }
 
 .cell.O {
-  background-color: #4a9152;
+  background-color: #9d4edd;
 }
 
 .cell.S {
@@ -99,7 +97,7 @@ h2 {
 }
 
 .cell.T {
-  background-color: #54450f;
+  background-color: #ff9e00;
 }
 
 .cell.Z {

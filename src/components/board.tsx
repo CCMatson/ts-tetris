@@ -1,11 +1,13 @@
 import { BoardShape } from "../types/BoardShape";
 import Cell from "./cell";
 
-interface Props {
+export interface BoardProps {
   currentBoard: BoardShape;
 }
 
-function Board({ currentBoard }: Props) {
+function Board(props: BoardProps) {
+  const currentBoard = props.currentBoard;
+  
   return (
     <div className="board">
       {currentBoard.map((row, rowIndex) => (

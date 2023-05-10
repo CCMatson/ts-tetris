@@ -15,6 +15,7 @@ import {
 
 //speed options for dropping shapes
 enum TickSpeed {
+  None = 0,
   Normal = 800,
   Sliding = 100,
   Fast = 50,
@@ -31,7 +32,8 @@ upcomingBlocks: Block[];
 } {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
+  const [tickSpeed, setTickSpeed] = useState<TickSpeed>(TickSpeed.None)
+  // const [tickSpeed, setTickSpeed] = useState<TickSpeed | null>(null);
   const [isCommiting, setIsCommiting] = useState(false);
   const [upcomingBlocks, setUpcomingBlocks] = useState<Block[]>([]);
 
@@ -88,7 +90,7 @@ upcomingBlocks: Block[];
 
     if (hasCollision(board, Shapes[newBlock].shapes, 0, 3)) {
       setIsPlaying(false);
-      setTickSpeed(null);
+      setTickSpeed(0);
     } else {
       setTickSpeed(TickSpeed.Normal);
     }

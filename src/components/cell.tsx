@@ -4,8 +4,8 @@ export interface CellProps {
   type: CellOptions;
 }
 
-function Cell({ type }: CellProps) {
-  return <div className={`cell ${type}`} />;
+function Cell(props: CellProps) {
+  return <div className={`cell ${props.type}`} />;
 }
 
 export default Cell;

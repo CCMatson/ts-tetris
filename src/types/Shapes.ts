@@ -1,33 +1,4 @@
-//block types are strings
-export enum Block {
-  I = "I",
-  J = "J",
-  L = "L",
-  O = "O",
-  S = "S",
-  T = "T",
-  Z = "Z",
-}
-
-//can be empty cell
-export enum EmptyCell {
-  Empty = "Empty",
-}
-
-//cell can contain a block or by empty
-export type CellOptions = Block | EmptyCell;
-
-//2D array of cellOptions
-export type BoardShape = CellOptions[][];
-
-//2D array of boolean values, representing shape of a block that can be placed on the game board
-export type BlockShape = boolean[][];
-
-type ShapesObj = {
-  [key in Block]: {
-    shapes: BlockShape;
-  }
-}
+import { ShapesObj } from "./ShapesObj";
 
 //shapes starting positions as boolean arrays, rotate these arrays to rotate blocks
 export const Shapes: ShapesObj = {

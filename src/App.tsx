@@ -2,7 +2,7 @@ import Board from "./components/board";
 import UpcomingBlocks from "./components/upcomingBlocks";
 import { useTetris } from "./hooks/useTetris";
 
-function App() {
+function App(): JSX.Element {
   const { board, startGame, isPlaying , score , upcomingBlocks} = useTetris();
 
   return (

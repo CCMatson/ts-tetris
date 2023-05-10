@@ -1,46 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Itim&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Itim&display=swap");
 
 body {
-  --color-background: #FFFFFF;
+  --color-background: #ffffff;
 }
 
 @media (prefers-colors-scheme: dark) {
   body {
-    --color-background: #FFFFFF;
+    --color-background: #ffffff;
   }
+}
+
+#root {
+  display: flex;
+  justify-content: center;
 }
 
 .App {
   display: grid;
-  grid-template-areas: 
-  ". title ."
-  ". game controllers ";
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    ". title ."
+    ". game controllers "
+    ;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-h1{
-text-align: center;
-grid-area: title;
-font-size: 48px;
---color-title: #222222;
-font-family: 'Berkshire Swash', cursive;
-font-family: 'Itim', cursive;;
+h1 {
+  text-align: center;
+  grid-area: title;
+  font-size: 48px;
+  --color-title: #222222;
+  /* font-family: 'Berkshire Swash', cursive; */
+  font-family: "Itim", cursive;
 }
 
 h2 {
-  font-family: 'Itim', cursive;
-  font-family: 'Berkshire Swash', cursive;
+  /* font-family: 'Itim', cursive; */
+  font-family: "Berkshire Swash", cursive;
 }
 
 .controls {
   grid-area: controls;
 }
 
-.board{
-border: 2px black solid;
-user-select: none;
-margin: auto;
-grid-area: game;
+.board {
+  border: 2px black solid;
+  user-select: none;
+  margin: auto;
+  grid-area: game;
 }
 
 .row {
@@ -59,17 +65,17 @@ grid-area: game;
 .cell {
   width: 30px;
   aspect-ratio: 1;
-  border: .05px black solid;
+  border: 0.05px black solid;
 }
 
 .cell.hidden {
   visibility: hidden;
 }
 
-.cell.Empty{
+.cell.Empty {
   background-color: #eef3ff;
-  background-color: #F2F2F2;
-  --color-board: #F2F2F2;;
+  background-color: #f2f2f2;
+  --color-board: #f2f2f2;
 }
 
 .cell.I {
@@ -110,7 +116,7 @@ grid-area: game;
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
   border-style: solid;
   border-width: 2px;
-  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
   box-sizing: border-box;
   color: #41403e;
   cursor: pointer;
@@ -119,7 +125,7 @@ grid-area: game;
   font-size: 1rem;
   line-height: 23px;
   outline: none;
-  padding: .75rem;
+  padding: 0.75rem;
   text-decoration: none;
   transition: all 235ms ease-in-out;
   border-bottom-left-radius: 15px 255px;
@@ -129,19 +135,19 @@ grid-area: game;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  font-family: 'Berkshire Swash', cursive;
-  font-family: 'Itim', cursive;;
+  font-family: "Berkshire Swash", cursive;
+  font-family: "Itim", cursive;
   font-size: 18px;
 }
 
 .button:hover {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
   transform: translate3d(0, 2px, 0);
   background-color: #eef3ff;
 }
 
 .button:focus {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
 }
 
 @media screen and (max-width: 800px) {

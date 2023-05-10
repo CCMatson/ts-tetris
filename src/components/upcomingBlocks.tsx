@@ -1,4 +1,5 @@
-import { Block, Shapes } from "../types/types";
+import { Block } from "../types/Block";
+import { Shapes } from "../types/Shapes";
 
 interface Props {
   upcomingBlocks: Block[];

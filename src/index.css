@@ -4,18 +4,12 @@ body {
   background-color: #edf2fb;
 }
 
-@media (prefers-colors-scheme: dark) {
-  /* body {
-    --color-background: #ffffff;
-  } */
-}
-
 #root {
   display: flex;
   justify-content: center;
 }
 
-.App {
+.app {
   display: grid;
   grid-template-areas:
     ". title ."
@@ -29,12 +23,10 @@ h1 {
   grid-area: title;
   font-size: 48px;
   --color-title: #222222;
-  /* font-family: 'Berkshire Swash', cursive; */
   font-family: "Itim", cursive;
 }
 
 h2 {
-  /* font-family: 'Itim', cursive; */
   font-family: "Berkshire Swash", cursive;
 }
 
@@ -45,7 +37,6 @@ h2 {
 .board {
   border: 2px black solid;
   user-select: none;
-  margin: auto;
   grid-area: game;
 }
 
@@ -149,8 +140,7 @@ h2 {
 }
 
 @media screen and (max-width: 800px) {
-  /* CSS styles for screens with a width of 800px or less */
-  .App {
+  .app {
     display: flex;
     flex-direction: column;
   }
@@ -162,8 +152,7 @@ h2 {
 }
 
 @media screen and (max-width: 700px) {
-  /* CSS styles for screens with a width of 800px or less */
-  .App {
+  .app {
     display: flex;
     flex-direction: column;
   }

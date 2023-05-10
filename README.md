@@ -1,6 +1,6 @@
 # TETRIS
 
-#[Click here to play](https://tetris-ts-23.netlify.app)
+# [Click here to play](https://tetris-ts-23.netlify.app)
 
 ## This is a Vite app, made with React and TypeScript. To play, use the arrow keys to move the blocks into completed lines.
 

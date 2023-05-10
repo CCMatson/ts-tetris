@@ -10,6 +10,7 @@ function App(): JSX.Element {
       <h1>TETRIS</h1>
       <Board currentBoard={board} />
       <div className="controls">
+        <h2>Use arrow keys: ⬆➡⬇⬅</h2>
         <h2>Score: {score}</h2>
         {isPlaying ? (
           <UpcomingBlocks upcomingBlocks={upcomingBlocks} />

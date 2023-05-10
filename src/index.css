@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Itim&display=swap");
 
 body {
-  --color-background: #ffffff;
+  background-color: #edf2fb;
 }
 
 @media (prefers-colors-scheme: dark) {
-  body {
+  /* body {
     --color-background: #ffffff;
-  }
+  } */
 }
 
 #root {
@@ -73,9 +73,7 @@ h2 {
 }
 
 .cell.Empty {
-  background-color: #eef3ff;
   background-color: #f2f2f2;
-  --color-board: #f2f2f2;
 }
 
 .cell.I {

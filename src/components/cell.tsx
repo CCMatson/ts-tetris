@@ -1,10 +1,10 @@
 import { CellOptions } from "../types/CellOptions";
 
-interface Props {
+export interface CellProps {
   type: CellOptions;
 }
 
-function Cell({ type }: Props) {
+function Cell({ type }: CellProps) {
   return <div className={`cell ${type}`} />;
 }
 

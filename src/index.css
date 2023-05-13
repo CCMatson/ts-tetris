@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Itim&display=swap");
 
-body {
-  background-color: #edf2fb;
+html {
+  background-color: #e9ecef;
 }
 
 #root {
   display: flex;
   justify-content: center;
+  /* background-color: #faedcd; */
 }
 
 .app {
@@ -50,6 +51,7 @@ h2 {
   gap: 10px;
   border: #222222 solid 2px;
   padding: 10px;
+  background-color: #f2f2f2;
 }
 
 .cell {
